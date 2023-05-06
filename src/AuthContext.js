@@ -24,4 +24,8 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
+export const getToken = () => {
+    return localStorage.getItem('jwtToken');
+}
+
 export default AuthContext;

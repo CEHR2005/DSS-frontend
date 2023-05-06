@@ -1,16 +1,23 @@
 import React, {useState} from 'react';
-
+import { register } from './api';
 import {Button, Form} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function RegisterForm({ onSubmit }) {
+
+function RegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await register(username, password);
+            alert('You have successfully registered! Redirecting to login page...');
+            // перенаправьте пользователя на страницу входа
+        } catch (error) {
+            alert('Error occurred during registration. Please try again.');
+        }
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({ username, password });
-  };
 
   return (
       <div className="container">

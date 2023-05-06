@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         const response = await fetch('https://localhost:7184/api/auth/login', {
@@ -19,7 +20,8 @@ function LoginForm() {
         if (response.ok) {
             const data = await response.json();
             localStorage.setItem('jwtToken', data.token);
-            console.log('Login successful');
+            console.log('Login successsful');
+            navigate("/");
         } else {
             console.error('Login failed');
         }

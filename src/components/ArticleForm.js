@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import './ArticleForm.css';
+import {addArticle} from "./api";
+import {getToken} from "../AuthContext";
 
-function ArticleForm({ createArticle }) {
+function ArticleForm() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [image, setImage] = useState('');
@@ -14,7 +16,14 @@ function ArticleForm({ createArticle }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        createArticle({ title, content, image });
+        let content_send = {
+            Title: title,
+            Body: content,
+            Image: image
+        }
+        addArticle(content_send, getToken()).then(r => {
+            console.log(r)
+        })
         setTitle('');
         setContent('');
         setImage('');
@@ -23,7 +32,6 @@ function ArticleForm({ createArticle }) {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>Add Article</Button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Article</Modal.Title>
@@ -49,6 +57,8 @@ function ArticleForm({ createArticle }) {
                     <Button variant="primary" type="submit" onClick={handleSubmit}>Create Article</Button>
                 </Modal.Footer>
             </Modal>
+            <Button variant="primary" onClick={handleShow}>Add Article</Button>
+
         </>
     );
 }
