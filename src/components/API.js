@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-const api = axios.create({
+const API = axios.create({
     baseURL: 'https://localhost:7184', // замените на ваш базовый URL
 });
-export const register = async (username, password) => {
+export const register = async (username, password, ConfirmPassword) => {
     try {
-        const response = await api.post('/api/Auth/register', {
+        const response = await API.post('/api/Auth/register', {
             username,
             password,
+            ConfirmPassword,
         });
         return response.data;
     } catch (error) {
@@ -15,21 +16,27 @@ export const register = async (username, password) => {
         throw error;
     }
 };
-export const getArticles = async (page, limit) => {
+export const getArticles = async () => {
     try {
-        const response = await api.get('/api/Articles', {
-            params: { page, limit },
-        });
+        const response = await API.get('/api/Articles', {});
         return response.data;
     } catch (error) {
         console.error('Error getting articles:', error);
         throw error;
     }
 };
-
+export const getUsers = async () => {
+    try {
+        const response = await API.get('/api/Users', {});
+        return response.data;
+    } catch (error) {
+        console.error('Error getting articles:', error);
+        throw error;
+    }
+};
 export const getComments = async (articleId) => {
     try {
-        const response = await api.get(`/api/Articles/${articleId}/Comments`);
+        const response = await API.get(`/api/Articles/${articleId}/Comments`);
         return response.data;
     } catch (error) {
         console.error('Error getting comments:', error);
@@ -39,7 +46,7 @@ export const getComments = async (articleId) => {
 
 export const addComment = async (articleId, content, token) => {
     try {
-        const response = await api.post(
+        const response = await API.post(
             `/api/Articles/${articleId}/Comments`,
             {
                 Text: content
@@ -60,7 +67,7 @@ export const addComment = async (articleId, content, token) => {
 export const addArticle = async (content, token) => {
     try {
         console.log(content)
-        const response = await api.post(
+        const response = await API.post(
             `/api/Articles/`,
             {
                 Title: content.Title,
@@ -82,7 +89,7 @@ export const addArticle = async (content, token) => {
 
 export const deleteArticle = async (articleId, token) => {
     try {
-        await api.delete(`/api/articles/${articleId}`, {
+        await API.delete(`/api/articles/${articleId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -94,7 +101,7 @@ export const deleteArticle = async (articleId, token) => {
 };
 export const deleteComment = async (commentId, token) => {
     try {
-        await api.delete(`/api/Comments/${commentId}`, {
+        await API.delete(`/api/Comments/${commentId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

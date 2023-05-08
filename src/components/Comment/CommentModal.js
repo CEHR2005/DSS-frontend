@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import React, {useState} from 'react';
+import {Button, Modal} from 'react-bootstrap';
 import AddCommentForm from './AddCommentForm';
 
-const CommentModal = ({ article }) => {
+const CommentModal = ({article}) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -23,7 +23,7 @@ const CommentModal = ({ article }) => {
                 <Modal.Body>
                     <p>{article.body}</p>
                     {isLoggedIn ? (
-                        <AddCommentForm articleId={article.id} />
+                        <AddCommentForm articleId={article.id}/>
                     ) : (
                         <p>
                             Чтобы добавить комментарий, пожалуйста, <a href="/login">войдите</a> или{' '}

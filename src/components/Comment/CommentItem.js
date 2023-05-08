@@ -1,10 +1,10 @@
 import React from 'react';
-import {Row} from 'react-bootstrap';
+import {Button, Col, Row} from 'react-bootstrap';
 import jwt_decode from 'jwt-decode';
-import {getToken} from "../AuthContext";
-import {deleteComment} from "./api";
-import { IoTrashBinOutline } from "react-icons/io5";
-const Comment = ({ comment, handleArticleDelete}) => {
+import {getToken} from "../../AuthContext";
+import {deleteComment} from "../API";
+
+const Comment = ({comment, handleArticleDelete, users}) => {
     const handleDeleteWithConfirmation = async () => {
         try {
             if (window.confirm('Вы уверены, что хотите удалить это сообщение?')) {
@@ -21,14 +21,20 @@ const Comment = ({ comment, handleArticleDelete}) => {
     const userId = decodedToken.sub;
     let isAuthor = String(userId) === String(comment.userId);
 
-
     return (
-        <Row className="comment">
-            <h5>{comment.User}</h5>
-            <p>{comment.text}</p>
-            {isAuthor && (
-                <IoTrashBinOutline  onClick={handleDeleteWithConfirmation} />
-            )}
+        <Row className="comment" key={comment.id}>
+            <Col xs={12} md={8}>
+                <h5>{users[`${comment.userId}`]}</h5>
+                <p>{comment.text}</p>
+            </Col>
+            <Col xs={6} md={4}>
+                {isAuthor && (
+                    <Button variant={"danger"} onClick={handleDeleteWithConfirmation} size={"sm"}>Delete
+                        comment</Button>
+                )}
+            </Col>
+
+
         </Row>
     );
 };

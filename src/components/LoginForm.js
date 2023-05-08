@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
+import React, {useState} from 'react';
+import {Button, Form} from 'react-bootstrap';
+import {useNavigate} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function LoginForm() {
@@ -14,7 +14,7 @@ function LoginForm() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({username, password}),
         });
 
         if (response.ok) {
@@ -38,7 +38,7 @@ function LoginForm() {
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        style={{ width: '50%' }}
+                        style={{width: '50%'}}
                     />
                 </Form.Group>
                 <Form.Group controlId="password">
@@ -47,7 +47,7 @@ function LoginForm() {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        style={{ width: '50%' }}
+                        style={{width: '50%'}}
                     />
                 </Form.Group>
                 <Button type="submit">Log in</Button>

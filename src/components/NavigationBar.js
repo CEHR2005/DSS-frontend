@@ -1,65 +1,44 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import AuthContext from '../AuthContext';
+import {useContext} from "react";
+import {Link} from "react-router-dom";
+import {Button, Container, Nav, Navbar} from "react-bootstrap";
+import AuthContext from "../AuthContext";
 
 const NavigationBar = () => {
-    const { loggedIn, logout } = useContext(AuthContext);
+    const {loggedIn, logout} = useContext(AuthContext);
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div className="container">
-                <Link className="navbar-brand" to="/">
+        <Navbar bg="dark" variant="dark" expand="lg">
+            <Container>
+                <Navbar.Brand as={Link} to="/">
                     My App
-                </Link>
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/">
-                                Home
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/article/1">
-                                Article List
-                            </Link>
-                        </li>
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="navbar-nav"/>
+                <Navbar.Collapse id="navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link as={Link} to="/">
+                            Home
+                        </Nav.Link>
+                    </Nav>
+                    <Nav>
                         {!loggedIn && (
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/login">
+                            <>
+                                <Nav.Link as={Link} to="/login">
                                     Login
-                                </Link>
-                            </li>
-                        )}
-                        {!loggedIn && (
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/register">
+                                </Nav.Link>
+                                <Nav.Link as={Link} to="/register">
                                     Register
-                                </Link>
-                            </li>
+                                </Nav.Link>
+                            </>
                         )}
                         {loggedIn && (
-                            <li className="nav-item">
-                                <button className="nav-link btn btn-link" onClick={logout}>
-                                    Logout
-                                </button>
-                            </li>
+                            <Button variant="link" onClick={logout}>
+                                Logout
+                            </Button>
                         )}
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     );
 };
 
