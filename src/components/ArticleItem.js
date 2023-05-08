@@ -1,15 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import {Card, Col} from "react-bootstrap";
+import {IoChatboxOutline} from "react-icons/io5";
+import ArticleModal from "./ArticleModal";
 
-function ArticleItem({ article }) {
+function ArticleItem({ article, setArticles, handleArticleDelete }) {
   return (
-    <div className="ArticleItem">
-      <h2>
-        <Link to={`/article/${article.id}`}>{article.title}</Link>
-      </h2>
-      <img src={article.image_url} alt={article.title} />
-      <p>Комментариев: {article.comment_count}</p>
-    </div>
+      <Col md={4} key={article.id}>
+          <Card className="mb-4 Card">
+              <Card.Img variant="top" src={article.imageUrl}   onError={({ currentTarget }) => {
+                  currentTarget.onerror = null; // prevents looping
+                  currentTarget.src="";
+              }}/>
+              <Card.Body>
+                  <Card.Title style={{ textAlign: 'center' }}>{article.title}</Card.Title>
+                  <Card.Text><IoChatboxOutline /> {article.comments.$values.length}</Card.Text>
+              </Card.Body>
+              <ArticleModal article={article}  setArticle={setArticles} handleArticleDelete={handleArticleDelete} />
+          </Card>
+      </Col>
   );
 }
 

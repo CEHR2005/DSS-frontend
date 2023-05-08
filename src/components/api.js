@@ -40,7 +40,7 @@ export const getComments = async (articleId) => {
 export const addComment = async (articleId, content, token) => {
     try {
         const response = await api.post(
-            `/api/articles/${articleId}/Comments`,
+            `/api/Articles/${articleId}/Comments`,
             {
                 Text: content
             },
@@ -83,6 +83,18 @@ export const addArticle = async (content, token) => {
 export const deleteArticle = async (articleId, token) => {
     try {
         await api.delete(`/api/articles/${articleId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+    } catch (error) {
+        console.error('Error deleting article:', error);
+        throw error;
+    }
+};
+export const deleteComment = async (commentId, token) => {
+    try {
+        await api.delete(`/api/Comments/${commentId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

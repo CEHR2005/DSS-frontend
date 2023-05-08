@@ -2,20 +2,25 @@ import React, { useState } from 'react';
 import {addComment} from "./api";
 import {getToken} from "../AuthContext";
 
-const AddCommentForm = ({ articleId }) => {
+const AddCommentForm = ({ articleId, handleCommentAdd }) => {
     const [content, setContent] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // console.log(articleId)
-        addComment(articleId, content, getToken())
+        addComment(articleId, content, getToken()).then(newComment =>
+            handleCommentAdd(newComment)
+        )
         setContent('');
     };
 
     return (
         <form onSubmit={handleSubmit} >
-            <div className="form-floating">
+            <div className="form-floating" style={{}}>
                 <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                          style={{
+                              minHeight: "100px"
+                          }}
                           value={content}
                           onChange={(e) => setContent(e.target.value)}></textarea>
                 <label htmlFor="floatingTextarea">Comment</label>

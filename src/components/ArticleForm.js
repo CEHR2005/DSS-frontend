@@ -4,11 +4,10 @@ import './ArticleForm.css';
 import {addArticle} from "./api";
 import {getToken} from "../AuthContext";
 
-function ArticleForm() {
+const ArticleForm = ({ handleAdd }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [image, setImage] = useState('');
-
     const [show, setShow] = useState(false);
 
     const handleShow = () => setShow(true);
@@ -23,6 +22,7 @@ function ArticleForm() {
         }
         addArticle(content_send, getToken()).then(r => {
             console.log(r)
+            handleAdd()
         })
         setTitle('');
         setContent('');
